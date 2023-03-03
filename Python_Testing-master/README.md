@@ -1,7 +1,7 @@
 # gudlift-registration
 
 ## error_login_email_ivalid
-![image](images/error.jpg)
+![Alt text](https://github.com/molly-muffin/P11_OC_Gudlft/blob/error_login_email_invalid/Python_Testing-master/images/error.JPG)
 
 ## correction error_login_email_ivalid
-![image](images/correction.jpg)
+![Alt text](https://github.com/molly-muffin/P11_OC_Gudlft/blob/error_login_email_invalid/Python_Testing-master/images/correction.JPG)
