@@ -1,4 +1,4 @@
-![Alt text](https://github.com/molly-muffin/P10_OC_SoftDesk/blob/QA/Python_Testing-master/images/logo.PNG)
+![Alt text](https://github.com/molly-muffin/P11_OC_Gudlft/blob/QA/Python_Testing-master/images/logo.png)
 
 # Améliorez une application Web Python par des tests et du débogage
 
