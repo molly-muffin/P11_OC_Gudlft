@@ -21,13 +21,17 @@ competitions = loadCompetitions()
 clubs = loadClubs()
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def index(error=None):
+    return render_template('index.html', error=error)
 
 @app.route('/showSummary',methods=['POST'])
 def showSummary():
-    club = [club for club in clubs if club['email'] == request.form['email']][0]
-    return render_template('welcome.html',club=club,competitions=competitions)
+    multiple_club = [club for club in clubs if club['email'] == request.form['email']]
+    try:
+        one_club = multiple_club[0]
+    except IndexError:
+        return index("Sorry, that email was not found.\nContact the administrator.")
+    return render_template('welcome.html',club=one_club,competitions=competitions)
 
 
 @app.route('/book/<competition>/<club>')
