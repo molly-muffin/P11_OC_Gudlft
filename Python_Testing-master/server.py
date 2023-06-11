@@ -40,7 +40,7 @@ def showSummary():
 def book(competition,club):
     foundClub = [c for c in clubs if c['name'] == club][0]
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
-    maxPlaces = min(12, int(foundClub['points']))
+    maxPlaces = min(12, int(foundClub["points"]), int(foundCompetition['numberOfPlaces']))
     if foundClub and foundCompetition:
         return render_template('booking.html',club=foundClub,competition=foundCompetition, maxPlaces=maxPlaces)
     else:
@@ -54,7 +54,7 @@ def updatePlaces(competition: dict, placesRequired:int) -> bool:
     print(competitionPlaces)
     # Limit places available for each club
     if 0 < placesRequired < 13:
-        competition['numberOfPlaces'] = competitionPlaces + 1 - placesRequired
+        competition['numberOfPlaces'] = competitionPlaces - placesRequired
         return True
     else:
         return False
