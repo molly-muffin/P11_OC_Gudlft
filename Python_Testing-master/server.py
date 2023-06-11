@@ -20,6 +20,7 @@ app.secret_key = 'something_special'
 competitions = loadCompetitions()
 clubs = loadClubs()
 
+
 @app.route('/')
 def index(error=None):
     return render_template('index.html', error=error)
@@ -34,8 +35,11 @@ def showSummary():
     return render_template('welcome.html',club=one_club,competitions=competitions)
 
 
+
+
 @app.route('/book/<competition>/<club>')
 def book(competition,club):
+    global maxPlaces
     foundClub = [c for c in clubs if c['name'] == club][0]
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
     maxPlaces = min(12, int(foundCompetition['numberOfPlaces']))
@@ -45,18 +49,6 @@ def book(competition,club):
         flash("Something went wrong-please try again")
         return render_template('welcome.html', club=club, competitions=competitions)
 
-def updatePlaces(competition: dict, placesRequired:int) -> bool:
-    """ Update places in a given competition """
-    competitionPlaces = int(competition['numberOfPlaces'])
-    print("competitionPlaces")
-    print(competitionPlaces)
-    # Limit places available for each club
-    if 0 < placesRequired < 13:
-        competition['numberOfPlaces'] = competitionPlaces - placesRequired
-        return True
-    else:
-        return False
-
 
 @app.route('/purchasePlaces',methods=['POST'])
 def purchasePlaces():
@@ -64,13 +56,13 @@ def purchasePlaces():
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
     clubPoints = int(club["points"])
-#    competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
-    if updatePlaces(competition, placesRequired):
-        flash("Great, you've booked your seats!")
+    if clubPoints >= placesRequired:
+        competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
+        club['points'] = int(club['points'])-placesRequired
+        flash('Great-booking complete !')
     else:
-        flash("Sorry, you do not have the number of available places required to reserve this number of places.")
+        flash('Sorry, you do not have the number of available places required to book this number of places.')
     return render_template('welcome.html', club=club, competitions=competitions)
-
 
 # TODO: Add route for points display
 
