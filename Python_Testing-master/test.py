@@ -36,3 +36,4 @@ def test_showSummary_template_render(client):
     email = "john@simplylift.co"
     response = client.post('/showSummary',data={"email": email})
     assert b"Welcome, john@simplylift.co" in response.data
+    
