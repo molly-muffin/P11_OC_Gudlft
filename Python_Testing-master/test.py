@@ -46,34 +46,18 @@ def competition():
         }
     ]
 
-
-def test_valid_points(client, club, competition, monkeypatch):
+def test_valid_date(client, club, competition, monkeypatch):
     monkeypatch.setattr('server.competitions', competition)
     monkeypatch.setattr('server.clubs', club)
+    response = client.post("book/Spring%20Festival/Simply%20Lift")
+    assert response.status_code != 200
+    assert b"The method is not allowed for the requested URL." in response.data
 
-    response = client.post(
-        '/purchasePlaces', data={
-            "competition": competition[0]['name'],
-            "club": club[0]['name'],
-            "places": 5})
-
-    assert response.status_code == 200
-    assert b"Great-booking complete !" in response.data
-    assert int(competition[0]['numberOfPlaces']) == 20
-    assert int(club[0]['points']) == 8
-
-def test_too_many_points(client, club, competition, monkeypatch):
+def test_invalid_date(client, club, competition, monkeypatch):
     monkeypatch.setattr('server.competitions', competition)
     monkeypatch.setattr('server.clubs', club)
-
-    response = client.post(
-        '/purchasePlaces', data={
-            "competition": competition[0]['name'],
-            "club": club[1]['name'],
-            "places": 50})
-
+    response = client.get("book/Spring%20Festival/Simply%20Lift")
     assert response.status_code == 200
-    assert b'Sorry, you do not have the number of available places required to book this number of places.' in response.data
-    assert b'Number of Places: 25' in response.data
+    assert b"Sorry, this competition is expired." in response.data
     assert int(competition[0]['numberOfPlaces']) == 25
-    assert int(club[1]['points']) == 4
+    assert int(club[0]['points']) == 13
