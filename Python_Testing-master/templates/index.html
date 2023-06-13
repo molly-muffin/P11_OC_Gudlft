@@ -7,13 +7,12 @@
 <body>
     <h1>Welcome to the GUDLFT Registration Portal!</h1>
     Please enter your secretary email to continue:
-    {% if error != None %}
-    <h3 style="color:red;">{{error}}</h3>
-    {% endif %}
     <form action="showSummary" method="post">
         <label for="email">Email:</label>
         <input type="email" name="email" id=""/>
         <button type="submit">Enter</button>
     </form>
+    <br>
+    <a href="{{ url_for('boardpoints') }}">Click here to see the Boardpoints clubs</a>
 </body>
 </html>

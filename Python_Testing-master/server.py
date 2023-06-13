@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from flask import Flask,render_template,request,redirect,flash,url_for
 
 
@@ -36,14 +37,19 @@ def showSummary():
 
 
 @app.route('/book/<competition>/<club>')
-def book(competition,club):
+def book(competition, club):
     foundClub = [c for c in clubs if c['name'] == club][0]
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
     maxPlaces = min(12, int(foundCompetition['numberOfPlaces']))
+    current_datetime = datetime.now()
+    competition_date = datetime.strptime(foundCompetition['date'], '%Y-%m-%d %H:%M:%S')
+    if competition_date < current_datetime:
+        flash("Sorry, this competition is expired.")
+        return render_template('welcome.html', club=foundClub, competitions=competitions)
     if foundClub and foundCompetition:
-        return render_template('booking.html',club=foundClub,competition=foundCompetition, maxPlaces=maxPlaces)
+        return render_template('booking.html', club=foundClub, competition=foundCompetition, maxPlaces=maxPlaces)
     else:
-        flash("Something went wrong-please try again")
+        flash("Something went wrong - please try again")
         return render_template('welcome.html', club=club, competitions=competitions)
 
 
@@ -59,10 +65,12 @@ def purchasePlaces():
         flash('Great-booking complete !')
     else:
         flash('Sorry, you do not have the number of available places required to book this number of places.')
+  
     return render_template('welcome.html', club=club, competitions=competitions)
 
-# TODO: Add route for points display
-
+@app.route('/boardpoints')
+def boardpoints():
+    return render_template('boardpoints.html', clubs=clubs)
 
 @app.route('/logout')
 def logout():
