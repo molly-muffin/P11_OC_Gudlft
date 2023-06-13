@@ -35,11 +35,8 @@ def showSummary():
     return render_template('welcome.html',club=one_club,competitions=competitions)
 
 
-
-
 @app.route('/book/<competition>/<club>')
 def book(competition,club):
-    global maxPlaces
     foundClub = [c for c in clubs if c['name'] == club][0]
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
     maxPlaces = min(12, int(foundCompetition['numberOfPlaces']))
