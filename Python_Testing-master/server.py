@@ -65,7 +65,7 @@ def purchasePlaces():
         club['points'] = int(club['points']) - placesRequired
         if not 0 < placesRequired < 13:
             flash("Sorry, you cannot book less than one place and more than 12 places !")
-        else: 
+        else:
             flash("Great-booking complete !")
     else:
         flash("Sorry, you do not have the number of available places required to book this number of places.")
@@ -80,4 +80,3 @@ def boardpoints():
 @app.route('/logout')
 def logout():
     return redirect(url_for('index'))
-
