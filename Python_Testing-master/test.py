@@ -1,10 +1,12 @@
 import pytest
-from server import purchasePlaces, app
+from server import app
+
 
 @pytest.fixture
 def client():
     with app.test_client() as client:
         yield client
+
 
 @pytest.fixture
 def clubs():
@@ -25,7 +27,8 @@ def clubs():
          }
     ]
 
-def test_board_display(client,clubs,monkeypatch):
+
+def test_board_display(client, clubs, monkeypatch):
     """
     Given: A user access the site
     When: he access the index url
