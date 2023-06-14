@@ -61,9 +61,13 @@ L'application est alimentée par des fichiers JSON. Il s'agit de contourner le f
 ### Vérification du code
 - Contrôle du code avec **flake8** :
 ```bash
-flake8 --max-line-length 130 --format=html --htmldir=flake-report --exclude=migrations
+flake8 --max-line-length 130 --format=html --htmldir=flake-report
 ```
-
+- Performance du code avec **locust** :
+```bash
+locust -f locustfile.py
+```
+--> puis rendez-vous sur : http://http://localhost:8089/
 
 > Laureenda Demeule
 > OpenClassroom
