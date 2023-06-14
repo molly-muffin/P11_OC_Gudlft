@@ -1,10 +1,12 @@
 import pytest
-from server import purchasePlaces, app
+from server import app
+
 
 @pytest.fixture
 def client():
     with app.test_client() as client:
         yield client
+
 
 @pytest.fixture
 def club():
@@ -46,12 +48,14 @@ def competition():
         }
     ]
 
+
 def test_valid_date(client, club, competition, monkeypatch):
     monkeypatch.setattr('server.competitions', competition)
     monkeypatch.setattr('server.clubs', club)
     response = client.post("book/Spring%20Festival/Simply%20Lift")
     assert response.status_code != 200
     assert b"The method is not allowed for the requested URL." in response.data
+
 
 def test_invalid_date(client, club, competition, monkeypatch):
     monkeypatch.setattr('server.competitions', competition)
