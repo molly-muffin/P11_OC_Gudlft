@@ -1,5 +1,5 @@
 import pytest
-from server import app, loadCompetitions, purchasePlaces
+from server import app
 
 
 @pytest.fixture
@@ -70,7 +70,6 @@ def test_unknown_email(client):
     email = "johndoe@simplylift.co"
     response = client.post('/showSummary', data={"email": email})
     assert b"Sorry, that email was not found." in response.data
-
 
 
 def test_more_than_12_places(client, clubs, competitions, monkeypatch):
