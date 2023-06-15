@@ -63,6 +63,10 @@ L'application est alimentée par des fichiers JSON. Il s'agit de contourner le f
 ```bash
 flake8 --max-line-length 130 --format=html --htmldir=flake-report
 ```
+- Tests du code avec **pytest** :
+```bash
+pytest --html=pytest_report.html test.py
+```
 - Performance du code avec **locust** :
 ```bash
 locust -f locustfile.py
